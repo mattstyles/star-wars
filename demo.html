@@ -9,13 +9,19 @@
     <link rel="import" href="star-wars.html">
 
     <style media="screen">
+        @font-face {
+            font-family: 'Thunder Pants';
+            src: url( './thunderpants/ThunderPants.otf' ) format( 'opentype' );
+        }
+
         body {
-            font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', Tahoma, 'Droid Sans', sans-serif;
-            font-size: 15px;
-            color: #3a3a3a;
+            font-family: 'Thunder Pants', 'Helvetica Neue', Helvetica, 'Lucida Grande', Tahoma, 'Droid Sans', sans-serif;
+            font-size: 48px;
+            line-height: 1.25em;
+            color: #fff;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            padding: 20px;
+            background: #e57368;
         }
 
 
@@ -24,9 +30,14 @@
 </head>
 <body unresolved>
 
-    <p>An example of using <code>&lt;star-wars></code>:</p>
-
-    <star-wars></star-wars>
+    <h2>suits</h2>
+    <p>scally</p>
+    <star-wars>
+        <star-slide>
+            <star-element>An example of using</star-element>
+            <star-element>Star-wars</star-element>
+        </star-slide>
+    </star-wars>
 
 </body>
 </html>

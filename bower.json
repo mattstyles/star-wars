@@ -10,7 +10,8 @@
   "license": "MIT",
   "homepage": "https://github.com/mattstyles/star-wars/",
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "thunderpants"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#>=0.4.0 <1.0.0",
