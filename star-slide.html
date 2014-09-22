@@ -24,6 +24,8 @@
 
             Polymer( 'star-slide', {
 
+                contents: null,
+
                 /**
                  * Published properties
                  */
@@ -52,14 +54,21 @@
                     this.bindAll( this );
 
                     // this.createAnimationFrames();
-                    console.log( 'star-slide ready' );
+                    // console.log( 'star-slide ready' );
+                    this.contents = [];
                 },
 
 
                 /**
                  * Light DOM should be ready by now so grab all the relevant child nodes
                  */
-                attached: function() {},
+                attached: function() {
+                    var elements = this.querySelectorAll( 'star-element' );
+
+                    Array.prototype.forEach.call( elements, function( el ) {
+                        this.contents.push( el );
+                    }.bind( this ));
+                },
 
 
                 /*-----------------------------------------------------------*\
@@ -92,6 +101,12 @@
 
                 show: function() {
                     this.classList.add( 'show' );
+
+                    this.contents.forEach( function( el, index ) {
+                        setTimeout( function() {
+                            el.show();
+                        }.bind( this ), 500 * index );
+                    }.bind( this ));
                 },
 
 
