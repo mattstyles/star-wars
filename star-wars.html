@@ -1,0 +1,32 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../bezier-easing/bezier-easing.html">
+
+<!--
+Cascading text.
+
+##### Example
+
+    <star-wars></star-wars>
+
+@element star-wars
+@blurb Scrolling text element.
+@homepage http://mattstyles.github.io/star-wars
+-->
+<polymer-element name="star-wars">
+
+    <template>
+
+        <link rel="stylesheet" href="star-wars.css" />
+
+        <bezier-easing id="bezier" x1=".75" x2=".2" y1="1" y2=".76"></bezing-easing>
+
+        <div id="container" class="transparent">
+            <content id="content"></content>
+        </div>
+
+    </template>
+
+    <script src="../web-animations-js/web-animations.js"></script>
+    <script src="./star-wars.js"></script>
+
+</polymer-element>
