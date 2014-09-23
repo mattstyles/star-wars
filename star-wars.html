@@ -94,7 +94,7 @@ Cascading text.
                  * Fired when Polymer has got the element ready
                  */
                 ready: function() {
-                    this.bindAll( this );
+                    // this.bindAll( this );
 
                     this.slides = [];
                 },
@@ -104,6 +104,19 @@ Cascading text.
                  * Light DOM should be ready by now so grab all the relevant child nodes
                  */
                 attached: function() {
+                    var theSlides = this.querySelectorAll( 'star-slide' );
+
+                    Array.prototype.forEach.call( theSlides, function( el ) {
+                        this.slides.push( el );
+                    }.bind( this ) );
+                },
+
+
+                /**
+                 * Only start when we know the children are ready.
+                 * FF and Safari wont be ready until after this element is attached so start things going in here
+                 */
+                domReady: function() {
                     this.start();
                 },
 
@@ -153,12 +166,6 @@ Cascading text.
                  * Grabs the slides, constructs the event chain to drive the slideshow and starts the first slide showing
                  */
                 start: function() {
-                    var theSlides = this.querySelectorAll( 'star-slide' );
-
-                    Array.prototype.forEach.call( theSlides, function( el ) {
-                        this.slides.push( el );
-                    }.bind( this ) );
-
                     this.slides.forEach( function( el, index ) {
                         el.addEventListener( 'slideEnd', this.onSlideEnd );
                     }.bind( this ) );
