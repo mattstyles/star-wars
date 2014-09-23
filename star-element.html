@@ -91,7 +91,25 @@
                     \*-----------------------------------------------------------*/
 
                     show: function() {
-                        this.classList.add( 'show' );
+                        var anim = document.timeline.play( new Animation(
+                            this,
+                            this.frames.show, {
+                                duration: 850,
+                                fill: 'forwards',
+                                easing: 'ease-out'
+                            }
+                        ));
+                    },
+
+                    hide: function() {
+                        var anim = document.timeline.play( new Animation(
+                            this,
+                            this.frames.hide, {
+                                duration: 500,
+                                fill: 'forwards',
+                                easing: 'ease-in'
+                            }
+                        ));
                     },
 
 
@@ -127,13 +145,14 @@
                     createAnimationFrames: function() {
                         this.frames = {
                             show: new KeyframeEffect([
-                                { opacity: '0', transform: 'scale(.8,.8) translateY( 20 )' },
-                                { opacity: '1', transform: 'scale(1,1), translateY( 0 )' }
+                                { offset: 0,  opacity: '0', transform: 'translate3d( 0, 100, 1 )' },
+                                { offset: .7, opacity: '1' },
+                                { offset: 1,  opacity: '1', transform: 'translate3d( 0, 0, 1 )' }
                             ]),
 
                             hide: new KeyframeEffect([
-                                { opacity: '1', transform: 'scale(1,1), translateY( 0 )' },
-                                { opacity: '0', transform: 'scale(.8,.8) translateY( -10 )' }
+                                { opacity: '1', transform: 'translate3d( 0, 0, 1 )' },
+                                { opacity: '0', transform: 'translate3d( 0, -100, 1 )' }
                             ])
                         };
                     }

@@ -16,6 +16,7 @@
             }
 
         </style>
+        <bezier-easing id="bezier" x1=".3" x2=".55" y1=".6" y2=".9"></bezing-easing>
         <content id="content" class="transparent"></content>
     </template>
 
@@ -102,7 +103,10 @@
                     this.contents.forEach( function( el, index ) {
                         setTimeout( function() {
                             el.show();
-                        }.bind( this ), 500 * index );
+                        }.bind( this ), this.$.bezier.calc( ( index + 1 ) / this.contents.length ) * 2000 );
+
+                        console.log( index + 1, this.contents.length, this.$.bezier.calc( ( index + 1 ) / this.contents.length ) * 2000 ) ;
+
                     }.bind( this ));
                 },
 
