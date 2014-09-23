@@ -91,13 +91,35 @@
                 upAction: function( event ) {},
 
 
+                /**
+                 * Fired when all elements are visible.
+                 * Starts the hide animations.
+                 */
+                onShowEnd: function( event ) {
+                    event.target.removeEventListener( this.onShowEnd );
+                    this.hide();
+                },
+
+                /**
+                 * Fired when all elements have hidden themselves.
+                 */
+                onHideEnd: function( event ) {
+                    event.target.removeEventListener( this.onHideEnd );
+                    this.classList.remove( 'show' );
+                    this.fire( 'slideEnd' );
+                },
+
                 /*-----------------------------------------------------------*\
                  *
                  *  Methods
                  *
                 \*-----------------------------------------------------------*/
 
+                /**
+                 * Triggers each slide element to show itself.
+                 */
                 show: function() {
+                    this.fire( 'slideStart' );
                     this.classList.add( 'show' );
 
                     this.contents.forEach( function( el, index ) {
@@ -105,7 +127,28 @@
                             el.show();
                         }.bind( this ), this.$.bezier.calc( ( index + 1 ) / this.contents.length ) * 2000 );
 
-                        console.log( index + 1, this.contents.length, this.$.bezier.calc( ( index + 1 ) / this.contents.length ) * 2000 ) ;
+                        // Grab when the last one finishes
+                        if ( index + 1 === this.contents.length ) {
+                            el.addEventListener( 'showEnd', this.onShowEnd );
+                        }
+
+                    }.bind( this ));
+                },
+
+
+                /**
+                 * Triggers each slide element to hide itself.
+                 */
+                hide: function() {
+                    this.contents.forEach( function( el, index ) {
+                        setTimeout( function() {
+                            el.hide();
+                        }.bind( this ), this.$.bezier.calc( ( index + 1 ) / this.contents.length ) * 2000 );
+
+                        // Grab when the last one finishes
+                        if ( index + 1 === this.contents.length ) {
+                            el.addEventListener( 'hideEnd', this.onHideEnd );
+                        }
 
                     }.bind( this ));
                 },

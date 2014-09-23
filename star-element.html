@@ -90,6 +90,9 @@
                      *
                     \*-----------------------------------------------------------*/
 
+                    /**
+                     * Uses animation frames to show the element
+                     */
                     show: function() {
                         var anim = document.timeline.play( new Animation(
                             this,
@@ -99,8 +102,15 @@
                                 easing: 'ease-out'
                             }
                         ));
+
+                        anim.onfinish = function( event ) {
+                            this.fire( 'showEnd' );
+                        }.bind( this );
                     },
 
+                    /**
+                     * Uses animation frames to hide the element
+                     */
                     hide: function() {
                         var anim = document.timeline.play( new Animation(
                             this,
@@ -110,6 +120,10 @@
                                 easing: 'ease-in'
                             }
                         ));
+
+                        anim.onfinish = function( event ) {
+                            this.fire( 'hideEnd' );
+                        }.bind( this );
                     },
 
 
