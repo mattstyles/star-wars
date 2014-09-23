@@ -53,8 +53,6 @@ Cascading text.
 
         </style>
 
-        <bezier-easing id="bezier" x1=".75" x2=".2" y1="1" y2=".76"></bezing-easing>
-
         <div id="container" fit>
             <content id="content"></content>
         </div>
@@ -67,6 +65,9 @@ Cascading text.
         (function( root ) {
 
             Polymer( 'star-wars', {
+
+                slides: null,
+
 
                 /**
                  * Published properties
@@ -95,7 +96,7 @@ Cascading text.
                 ready: function() {
                     this.bindAll( this );
 
-                    this.createAnimationFrames();
+                    this.slides = [];
                 },
 
 
@@ -129,16 +130,40 @@ Cascading text.
                 upAction: function( event ) {},
 
 
+                /**
+                 * Fired when a slide has finished and triggers the next slide if one exists
+                 */
+                onSlideEnd: function( event ) {
+                    event.target.removeEventListener( this.onSlideEnd );
+
+                    var next = event.target.nextElementSibling;
+
+                    if ( next ) {
+                        next.show();
+                    }
+                },
+
                 /*-----------------------------------------------------------*\
                  *
                  *  Methods
                  *
                 \*-----------------------------------------------------------*/
 
+                /**
+                 * Grabs the slides, constructs the event chain to drive the slideshow and starts the first slide showing
+                 */
                 start: function() {
-                    var slide = this.querySelectorAll( 'star-slide' );
+                    var theSlides = this.querySelectorAll( 'star-slide' );
 
-                    slide[ 0 ].show();
+                    Array.prototype.forEach.call( theSlides, function( el ) {
+                        this.slides.push( el );
+                    }.bind( this ) );
+
+                    this.slides.forEach( function( el, index ) {
+                        el.addEventListener( 'slideEnd', this.onSlideEnd );
+                    }.bind( this ) );
+
+                    this.slides[ 0 ].show();
                 },
 
 
@@ -165,26 +190,7 @@ Cascading text.
                             }
                         }
                     }
-                },
-
-
-                /**
-                 * Creates the animation frames
-                 */
-                createAnimationFrames: function() {
-                    this.frames = {
-                        show: new KeyframeEffect([
-                            { opacity: '0', transform: 'scale(.8,.8) translateY( 20 )' },
-                            { opacity: '1', transform: 'scale(1,1), translateY( 0 )' }
-                        ]),
-
-                        hide: new KeyframeEffect([
-                            { opacity: '1', transform: 'scale(1,1), translateY( 0 )' },
-                            { opacity: '0', transform: 'scale(.8,.8) translateY( -10 )' }
-                        ])
-                    };
                 }
-
 
             });
 
