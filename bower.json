@@ -5,13 +5,20 @@
     "Matt Styles <@personalurban>"
   ],
   "description": "Scrolling text element",
-  "keywords": "scrolling text, polymer, web-components, web-animations",
+  "keywords": [
+      "scrolling text",
+      "polymer",
+      "web-components",
+      "web-animations"
+  ],
   "main": "star-wars.html",
   "license": "MIT",
   "homepage": "https://github.com/mattstyles/star-wars/",
   "ignore": [
     "**/.*",
-    "thunderpants"
+    "thunderpants",
+    "components",
+    "*.sh"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#>=0.4.0 <1.0.0",
